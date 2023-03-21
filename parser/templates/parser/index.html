@@ -1,0 +1,25 @@
+{% extends 'parser/layout.html' %}
+
+{% block body %}
+{% if messages %}
+    {% for i in messages %}
+        {{i}}
+    {% endfor %}
+{% endif %}
+    {% if found %}
+        <h1>{{title}}</h1>
+        <p>{{content}}</p>
+        <form action="{% url 'parser:add' title content %}" method = "post">
+            {% csrf_token %}
+            <button type = "submit" class ="btn btn-primary">Add</button>
+        </form>
+    {% else %}
+        <h2>Maybe you meant:</h2>
+        <ul class="list-group">
+        <li class="list-group-item active">Results</li>
+        {% for i in arr %}
+            <li class="list-group-item">{{i}}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock body %}
